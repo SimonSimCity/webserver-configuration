@@ -1,7 +1,12 @@
+This script is a basic script to create a webdevelopment-webserver I run.
+The steps you have to do before you can use this script is just setting up
+a clean Linux Debian Squeeze environment (or something simular).
+
 Set up an development-webserver use the following commands:
 
 aptitude install git
 git clone git://github.com/SimonSimCity/webserver-configuration.git
+chmod +x webserver-configuration -R
 cd webserver-configuration
 
 Out of here you can use all the scripts that are avaiable in this package.

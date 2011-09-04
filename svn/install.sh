@@ -13,9 +13,5 @@ echo Create Repository-Factory
 mkdir $REPODIR
 chmod 770 $REPODIR
 
-if [[ $1 != "" ]] ; then
-	chgrp $1 $REPODIR
-fi
-
-echo Starting subversion
+echo Starting subversion deamon
 svnserve -d -r $REPODIR

@@ -1,11 +1,10 @@
 #!/bin/bash
 
 echo Register DotDeb as apt-resource
-./scripts/apt/register-dotdeb.sh
+./apt/register-dotdeb.sh
 
 echo Install Samba-mount
-aptitude install smbfs
-./scripts/samba/init.sh
+./samba/init.sh
 
 # Some personal-liked programms
 aptitude install htop
