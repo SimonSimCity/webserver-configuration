@@ -1,0 +1,8 @@
+Set up an development-webserver use the following commands:
+
+aptitude install git
+git clone git://github.com/SimonSimCity/webserver-configuration.git
+cd webserver-configuration
+
+Out of here you can use all the scripts that are avaiable in this package.
+I prefer to use the install.sh to run all the scripts.
