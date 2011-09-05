@@ -1,0 +1,26 @@
+server {
+	listen 80;
+	server_name *.sf2;
+
+	root /var/www/$host/web;
+	access_log /var/www/log/$host.nginx.access.log;
+	error_log /var/www/log/$host.nginx.error.log;
+
+	location / {
+		index app.php
+		if (-f $request_filename) {
+			break;
+		}
+		rewrite ^(.*)$ /app.php last;
+	}
+
+	location ~ (app|app_dev).php {
+		include fastcgi_params;
+		fastcgi_split_path_info ^(.+\.php)(.*)$;
+		fastcgi_param SCRIPT_FILENAME /path/to/php$fastcgi_script_name;
+		fastcgi_param PATH_INFO $fastcgi_path_info;
+		fastcgi_param PATH_TRANSLATED $document_root$fastcgi_path_info;
+		fastcgi_param HTTPS off;
+		fastcgi_pass 127.0.0.1:9000;
+	}
+}

@@ -1,8 +1,8 @@
 server {
 	listen 80;
-	server_name default.ssc;
+	server_name *.ssc;
 
-	root /var/www;
+	root /var/www/$host;
 	access_log /var/www/log/$host.nginx.access.log;
 	error_log /var/www/log/$host.nginx.error.log;
 

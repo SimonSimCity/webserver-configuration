@@ -11,7 +11,10 @@ echo Install htop
 aptitude install htop
 
 # Install PHP5, MySQL and GraphicsMagick
-aptitude install php5-cli php5-fpm php5-mysql graphicsmagick
+aptitude install php5-cli php5-fpm php5-mysql mysql-server graphicsmagick
+/etc/init.d/php5-fpm restart
+
+mysql -u root -p < ./mysql/init.sql
 
 echo Install and configure nginx
 ./nginx/init.sh
