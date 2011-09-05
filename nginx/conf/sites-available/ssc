@@ -17,7 +17,6 @@ server {
 		}
 		
 		include fastcgi_params;
-		fastcgi_index index.php;
 		fastcgi_pass 127.0.0.1:9000;
 	}
 }

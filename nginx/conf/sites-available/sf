@@ -7,8 +7,8 @@ server {
 	error_log /var/www/log/$host.nginx.error.log;
 
 	location / {
-		index index.php
-		try_files $uri /index.php?$args
+		index index.php;
+		try_files $uri /index.php?$args;
 	}
 	
 	location ^~ /sf/ {
@@ -17,11 +17,6 @@ server {
 
 	location ~ ^(index|frontend|frontend_dev|backend|backend_dev)\.php$ {
 		include fastcgi_params;
-		fastcgi_split_path_info ^(.+\.php)(.*)$;
-		fastcgi_param SCRIPT_FILENAME /path/to/php$fastcgi_script_name;
-		fastcgi_param PATH_INFO $fastcgi_path_info;
-		fastcgi_param PATH_TRANSLATED $document_root$fastcgi_path_info;
-		fastcgi_param HTTPS off;
 		fastcgi_pass 127.0.0.1:9000;
 	}	
 }

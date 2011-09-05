@@ -7,20 +7,20 @@ server {
 	error_log /var/www/log/$host.nginx.error.log;
 
 	location / {
-		index app.php
+		set $app_index app_dev.php;
+		if ($http_cookie ~ "(; )?env=prod") {
+            set $app_index app.php;
+        }
+		index $app_index;
+		
 		if (-f $request_filename) {
 			break;
 		}
-		rewrite ^(.*)$ /app.php last;
+		rewrite ^(.*)$ /$app_index last;
 	}
 
 	location ~ (app|app_dev).php {
 		include fastcgi_params;
-		fastcgi_split_path_info ^(.+\.php)(.*)$;
-		fastcgi_param SCRIPT_FILENAME /path/to/php$fastcgi_script_name;
-		fastcgi_param PATH_INFO $fastcgi_path_info;
-		fastcgi_param PATH_TRANSLATED $document_root$fastcgi_path_info;
-		fastcgi_param HTTPS off;
 		fastcgi_pass 127.0.0.1:9000;
 	}
 }
