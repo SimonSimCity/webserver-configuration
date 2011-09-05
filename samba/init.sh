@@ -1,9 +1,9 @@
 #!/bin/bash
 
-echo -en "Command to recive the resources ip-address (or ip-address instead) [ \"wins_getipaddress MYHOST 192.168.56\" ]"
+echo -en "Command to recive the resources ip-address f.e. \"wins_getipaddress MYWINSHOST 192.168.56\" [ \"echo 192.168.56.1\" ]"
 read host
 if [ -z "$host" ]; then
-  host="wins_getipaddress MYHOST 192.168.56"
+  host="echo 192.168.56.1"
 fi
 
 echo -en "Have you used the script wins_getipaddress in the last step? (yes|no) [ \"no\" ]"
