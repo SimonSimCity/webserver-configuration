@@ -1,9 +1,15 @@
 <IfModule mod_ssl.c>
-<VirtualHost _default_:8443>
+<VirtualHost 127.0.0.1:8443>
 	ServerAdmin webmaster@localhost
+	ServerName default.ssc:8443
 
 	DocumentRoot /var/www
-	
+
+	FastCgiExternalServer /mnt/www/php.default-ssl.fcgi -host 127.0.0.1:9000
+	AddHandler php5-fcgi .php
+	Action php5-fcgi /usr/lib/cgi-bin/php.default-ssl.fcgi
+	Alias /usr/lib/cgi-bin/ /mnt/www/
+
 	<Directory /var/www/>
 		Options Indexes FollowSymLinks MultiViews
 		AllowOverride None

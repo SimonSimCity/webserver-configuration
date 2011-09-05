@@ -10,10 +10,13 @@ echo Install Samba-mount
 echo Install htop
 aptitude install htop
 
-# Install Nginx, PHP5, MySQL and GraphicsMagick
-aptitude install nginx php5-cli php5-fpm php5-mysql graphicsmagick
+# Install PHP5, MySQL and GraphicsMagick
+aptitude install php5-cli php5-fpm php5-mysql graphicsmagick
 
-echo Install Apache2
+echo Install and configure nginx
+./nginx/init.sh
+
+echo Install and configure Apache2
 ./apache/init.sh
 
 rm /var/www -R
