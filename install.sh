@@ -20,6 +20,9 @@ mysql -u root -p < ./mysql/init.sql
 rm /var/www -R
 ln -s /mnt/www /var/www
 
+# create directory for logs
+[ -a /var/www/log ] || mkdir /var/www/log
+
 echo Install and configure nginx
 ./nginx/init.sh
 
