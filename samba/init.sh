@@ -23,7 +23,7 @@ fi
 # Install the samba-client for mount
 aptitude install smbfs
 
-# create directory
+# create directory if not exists
 [ -a $path ] || mkdir $path
 
 # Add the command to load the external resource to rc.local
@@ -48,3 +48,14 @@ if [[ $REPLY =~ ^[Yy]$ ]]
 then
 	/etc/rc.local
 fi
+
+# create directory if not exists or clean it up.
+if [[ -a /var/www/ ]]
+then
+	rm /var/www/* -R
+else
+	mkdir /var/www/
+fi
+
+# create symlink from the mounted directory to /var/www/
+ln -s $path /var/www

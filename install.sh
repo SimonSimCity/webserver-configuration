@@ -17,9 +17,6 @@ aptitude install php5-cli php5-fpm php5-gd php5-mysql mysql-server graphicsmagic
 echo Please insert the password for the MySQL user "root"
 mysql -u root -p < ./mysql/init.sql
 
-rm /var/www/* -R
-ln -s /mnt/www /var/www
-
 # create directory for logs
 [ -a /var/www/log ] || mkdir /var/www/log
 
