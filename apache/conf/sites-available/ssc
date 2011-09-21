@@ -1,0 +1,29 @@
+<VirtualHost 127.0.0.1:8080>
+	ServerAdmin webmaster@localhost
+	ServerAlias *.ssc
+
+	# TODO: Try to replace the /mnt/www/ stuff by /var/www. Currently symlinks are not allowed at this level.
+	UseCanonicalName Off
+	VirtualDocumentRoot /mnt/www/%0
+
+	FastCgiExternalServer /mnt/www/php.ssc.default.fcgi -host 127.0.0.1:9000
+	AddHandler php5-fcgi .php
+	Action php5-fcgi /usr/lib/cgi-bin/php.ssc.default.fcgi
+	Alias /usr/lib/cgi-bin/ /mnt/www/
+
+	<Directory /mnt/www/>
+		Options Indexes FollowSymLinks MultiViews
+		AllowOverride None
+		Order allow,deny
+		allow from all
+	</Directory>
+
+	ErrorLog /var/www/log/apache.ssc.error.log
+
+	# Possible values include: debug, info, notice, warn, error, crit,
+	# alert, emerg.
+	LogLevel warn
+
+	CustomLog /var/www/log/apache.ssc.access.log combined
+
+</VirtualHost>
