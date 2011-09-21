@@ -3,11 +3,12 @@ server {
 	server_name *.ssc;
 
 	root /var/www/$host;
-	access_log /var/www/log/$host.nginx.access.log;
-	error_log /var/www/log/$host.nginx.error.log;
+	index index.php index.html index.htm;
+
+	access_log /var/www/log/nginx.ssc.access.log;
+	error_log /var/www/log/nginx.ssc.error.log;
 
 	location / {
-		try_files $uri $uri/ /index.html /index.php;
 	}
 
 	location ~ \.php$ {

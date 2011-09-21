@@ -3,24 +3,26 @@ server {
 	server_name *.sf2;
 
 	root /var/www/$host/web;
-	access_log /var/www/log/$host.nginx.access.log;
-	error_log /var/www/log/$host.nginx.error.log;
+	access_log /var/www/log/nginx.sf2.access.log;
+	error_log /var/www/log/nginx.sf2.error.log;
 
 	location / {
 		set $app_index app_dev.php;
 		if ($http_cookie ~ "(; )?env=prod") {
-            set $app_index app.php;
-        }
+			set $app_index app.php;
+		}
+
 		index $app_index;
-		
+
 		if (-f $request_filename) {
 			break;
 		}
+
 		rewrite ^(.*)$ /$app_index last;
 	}
 
 	location ~ (app|app_dev).php {
-		include fastcgi_params;
 		fastcgi_pass 127.0.0.1:9000;
+		include fastcgi_params;
 	}
 }
