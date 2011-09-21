@@ -3,12 +3,10 @@ server {
 	server_name default.ssc;
 
 	root /var/www;
+	index index.php index.html index.htm;
+
 	access_log /var/www/log/nginx.default.access.log;
 	error_log /var/www/log/nginx.default.error.log;
-
-	location / {
-		index $uri $uri/ /index.html /index.php;
-	}
 
 	location ~ \.php$ {
 		include fastcgi_params;
