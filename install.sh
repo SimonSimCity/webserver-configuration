@@ -23,8 +23,8 @@ ln -s /mnt/www /var/www
 # create directory for logs
 [ -a /var/www/log ] || mkdir /var/www/log
 
-echo Install and configure nginx
-./nginx/init.sh
-
 echo Install and configure Apache2
 ./apache/init.sh
+
+echo Install and configure nginx
+./nginx/init.sh
