@@ -11,7 +11,7 @@ echo Install htop
 aptitude install htop
 
 # Install PHP5, MySQL and GraphicsMagick
-aptitude install php5-cli php5-fpm php5-mysql mysql-server graphicsmagick
+aptitude install php5-cli php5-fpm php5-gd php5-mysql mysql-server graphicsmagick
 /etc/init.d/php5-fpm restart
 
 echo Please insert the password for the MySQL user "root"
