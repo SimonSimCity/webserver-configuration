@@ -12,6 +12,8 @@ fi
 
 read -p "Username: " username
 read -s -p "Password: " password
+# If you're using a read-command and unhide the user-input no new-line will be added after the command. So I do it manually
+echo
 
 read -p "Path to mount the external ressource [ \"/mnt/www\" ]" path
 if [ -z "$path" ]; then
@@ -39,4 +41,10 @@ read -p "Do you want to edit the file now? (y|n) " -n 1
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
 	editor /etc/rc.local
+fi
+
+read -p "Do you want to call the script /etc/rc.local now? (y|n) " -n 1
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+	/etc/rc.local
 fi
