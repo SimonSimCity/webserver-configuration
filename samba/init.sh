@@ -21,7 +21,7 @@ if [ -z "$path" ]; then
 fi
 
 # Install the samba-client for mount
-aptitude install smbfs
+aptitude -y install smbfs > /dev/null
 
 # create directory if not exists
 [ -a $path ] || mkdir $path
@@ -46,7 +46,7 @@ fi
 read -p "Do you want to call the script /etc/rc.local now? (y|n) " -n 1
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-	/etc/rc.local
+	/etc/rc.local > /dev/null
 fi
 
 # create directory if not exists or clean it up.
