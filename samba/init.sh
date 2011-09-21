@@ -1,25 +1,19 @@
 #!/bin/bash
 
-echo -en "Command to recive the resources ip-address f.e. \"wins_getipaddress MYWINSHOST 192.168.56\" [ \"echo 192.168.56.1\" ]"
-read host
+read -p "Command to recive the resources ip-address f.e. \"wins_getipaddress MYWINSHOST 192.168.56\" [ \"echo 192.168.56.1\" ]" host
 if [ -z "$host" ]; then
   host="echo 192.168.56.1"
 fi
 
-echo -en "Have you used the script wins_getipaddress in the last step? (yes|no) [ \"no\" ]"
-read usedwins
+read -p "Have you used the script wins_getipaddress in the last step? (yes|no) [ \"no\" ]" usedwins
 if [ "$usedwins" = "yes" ]; then
   cp wins_getipaddress.sh /sbin/
 fi
 
-echo -en "Username: "
-read username
+read -p "Username: " username
+read -s -p "Password: " password
 
-echo -en "Password: "
-read password
-
-echo -en "Path to mount the external ressource [ \"/mnt/www\" ] "
-read path
+read -p "Path to mount the external ressource [ \"/mnt/www\" ]" path
 if [ -z "$path" ]; then
   path="/mnt/www"
 fi
