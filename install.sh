@@ -29,13 +29,6 @@ then
 	mysqladmin -u root password $mysqlpassword
 fi
 
-read -s -p "Please insert your mysql root-password: " mysqlpassword
-echo
-if [ -n "$mysqlpassword" ]
-then
-	mysqladmin -u root password $mysqlpassword
-fi
-
 # create directory for logs
 [ -a /var/www/log ] || mkdir /var/www/log
 
