@@ -36,7 +36,7 @@ echo
 echo "This script has changed some settings in the file /etc/rc.local"
 echo "Ensure that the commands can be executed. In my case I allways have to move a \"exit 0\" line."
 read -p "Do you want to edit the file now? (y|n) " -n 1
-if [[ ! $REPLY =~ ^[Yy]$ ]]
+if [[ $REPLY =~ ^[Yy]$ ]]
 then
 	editor /etc/rc.local
 fi
