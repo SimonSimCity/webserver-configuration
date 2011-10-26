@@ -33,6 +33,11 @@ echo "" >> /etc/rc.local
 echo "# mount the webfolder" >> /etc/rc.local
 echo "# nobrl parameter is important - see http://www.kitpages.fr/sf2_samba_sqlite3.php" >> /etc/rc.local
 echo "mount -t smbfs -o username=$username,password=$password,uid=www-data,gid=www-data,nobrl //\$srv/htdocs $path" >> /etc/rc.local
+echo "" >> /etc/rc.local
+echo "# cifs client workaround" >> /etc/rc.local
+echo "# @see: http://blog.dhampir.no/content/cifs-vfs-no-response-for-cmd-n-mid" >> /etc/rc.local
+echo "modprobe cifs" >> /etc/rc.local
+echo "echo 0 > /proc/fs/cifs/OplockEnabled" >> /etc/rc.local
 
 echo
 echo "This script has changed some settings in the file /etc/rc.local"
