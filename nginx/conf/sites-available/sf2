@@ -7,16 +7,16 @@ server {
 	error_log /var/www/log/nginx.sf2.error.log;
 
 	location / {
+		if (-f $request_filename) {
+			break;
+		}
+
 		set $app_index app_dev.php;
 		if ($http_cookie ~ "(; )?env=prod") {
 			set $app_index app.php;
 		}
 
 		index $app_index;
-
-		if (-f $request_filename) {
-			break;
-		}
 
 		rewrite ^(.*)$ /$app_index last;
 	}
