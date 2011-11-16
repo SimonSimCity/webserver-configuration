@@ -1,0 +1,177 @@
+diff -Naur orig-conf//ports.conf conf//ports.conf
+--- orig-conf//ports.conf	2011-10-24 14:31:19.172900700 +0200
++++ conf//ports.conf	2011-09-05 19:33:27.992187500 +0200
+@@ -1,23 +1,10 @@
+-# If you just change the port or add more ports here, you will likely also
+-# have to change the VirtualHost statement in
+-# /etc/apache2/sites-enabled/000-default
+-# This is also true if you have upgraded from before 2.2.9-3 (i.e. from
+-# Debian etch). See /usr/share/doc/apache2.2-common/NEWS.Debian.gz and
+-# README.Debian.gz
+-
+-NameVirtualHost *:80
+-Listen 80
+-
+-<IfModule mod_ssl.c>
+-    # If you add NameVirtualHost *:443 here, you will also have to change
+-    # the VirtualHost statement in /etc/apache2/sites-available/default-ssl
+-    # to <VirtualHost *:443>
+-    # Server Name Indication for SSL named virtual hosts is currently not
+-    # supported by MSIE on Windows XP.
+-    Listen 443
+-</IfModule>
+-
+-<IfModule mod_gnutls.c>
+-    Listen 443
+-</IfModule>
+-
++NameVirtualHost 127.0.0.1:8080
++Listen 127.0.0.1:8080
++
++<IfModule mod_ssl.c>
++	Listen 127.0.0.1:8443
++</IfModule>
++
++<IfModule mod_gnutls.c>
++	Listen 127.0.0.1:8443
++</IfModule>
+diff -Naur orig-conf//sites-available/default conf//sites-available/default
+--- orig-conf//sites-available/default	2011-10-24 14:31:20.195400700 +0200
++++ conf//sites-available/default	2011-09-05 18:55:40.129882800 +0200
+@@ -1,11 +1,14 @@
+-<VirtualHost *:80>
++<VirtualHost 127.0.0.1:8080>
+ 	ServerAdmin webmaster@localhost
++	ServerName default.ssc:8080
+ 
+ 	DocumentRoot /var/www
+-	<Directory />
+-		Options FollowSymLinks
+-		AllowOverride None
+-	</Directory>
++
++	FastCgiExternalServer /mnt/www/php.default.fcgi -host 127.0.0.1:9000
++	AddHandler php5-fcgi .php
++	Action php5-fcgi /usr/lib/cgi-bin/php.default.fcgi
++	Alias /usr/lib/cgi-bin/ /mnt/www/
++
+ 	<Directory /var/www/>
+ 		Options Indexes FollowSymLinks MultiViews
+ 		AllowOverride None
+@@ -13,14 +16,6 @@
+ 		allow from all
+ 	</Directory>
+ 
+-	ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
+-	<Directory "/usr/lib/cgi-bin">
+-		AllowOverride None
+-		Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+-		Order allow,deny
+-		Allow from all
+-	</Directory>
+-
+ 	ErrorLog ${APACHE_LOG_DIR}/error.log
+ 
+ 	# Possible values include: debug, info, notice, warn, error, crit,
+@@ -29,13 +24,4 @@
+ 
+ 	CustomLog ${APACHE_LOG_DIR}/access.log combined
+ 
+-    Alias /doc/ "/usr/share/doc/"
+-    <Directory "/usr/share/doc/">
+-        Options Indexes MultiViews FollowSymLinks
+-        AllowOverride None
+-        Order deny,allow
+-        Deny from all
+-        Allow from 127.0.0.0/255.0.0.0 ::1/128
+-    </Directory>
+-
+ </VirtualHost>
+diff -Naur orig-conf//sites-available/default-ssl conf//sites-available/default-ssl
+--- orig-conf//sites-available/default-ssl	2011-10-24 14:31:20.199400700 +0200
++++ conf//sites-available/default-ssl	2011-09-05 18:55:56.995117100 +0200
+@@ -1,12 +1,15 @@
+ <IfModule mod_ssl.c>
+-<VirtualHost _default_:443>
++<VirtualHost 127.0.0.1:8443>
+ 	ServerAdmin webmaster@localhost
++	ServerName default.ssc:8443
+ 
+ 	DocumentRoot /var/www
+-	<Directory />
+-		Options FollowSymLinks
+-		AllowOverride None
+-	</Directory>
++
++	FastCgiExternalServer /mnt/www/php.default-ssl.fcgi -host 127.0.0.1:9000
++	AddHandler php5-fcgi .php
++	Action php5-fcgi /usr/lib/cgi-bin/php.default-ssl.fcgi
++	Alias /usr/lib/cgi-bin/ /mnt/www/
++
+ 	<Directory /var/www/>
+ 		Options Indexes FollowSymLinks MultiViews
+ 		AllowOverride None
+@@ -14,14 +17,6 @@
+ 		allow from all
+ 	</Directory>
+ 
+-	ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
+-	<Directory "/usr/lib/cgi-bin">
+-		AllowOverride None
+-		Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+-		Order allow,deny
+-		Allow from all
+-	</Directory>
+-
+ 	ErrorLog ${APACHE_LOG_DIR}/error.log
+ 
+ 	# Possible values include: debug, info, notice, warn, error, crit,
+@@ -30,15 +25,6 @@
+ 
+ 	CustomLog ${APACHE_LOG_DIR}/ssl_access.log combined
+ 
+-	Alias /doc/ "/usr/share/doc/"
+-	<Directory "/usr/share/doc/">
+-		Options Indexes MultiViews FollowSymLinks
+-		AllowOverride None
+-		Order deny,allow
+-		Deny from all
+-		Allow from 127.0.0.0/255.0.0.0 ::1/128
+-	</Directory>
+-
+ 	#   SSL Engine Switch:
+ 	#   Enable/Disable SSL for this virtual host.
+ 	SSLEngine on
+diff -Naur orig-conf//sites-available/ssc conf//sites-available/ssc
+--- orig-conf//sites-available/ssc	1970-01-01 01:00:00.000000000 +0100
++++ conf//sites-available/ssc	2011-09-21 09:00:43.639648400 +0200
+@@ -0,0 +1,29 @@
++<VirtualHost 127.0.0.1:8080>
++	ServerAdmin webmaster@localhost
++	ServerAlias *.ssc
++
++	# TODO: Try to replace the /mnt/www/ stuff by /var/www. Currently symlinks are not allowed at this level.
++	UseCanonicalName Off
++	VirtualDocumentRoot /mnt/www/%0
++
++	FastCgiExternalServer /mnt/www/php.ssc.default.fcgi -host 127.0.0.1:9000
++	AddHandler php5-fcgi .php
++	Action php5-fcgi /usr/lib/cgi-bin/php.ssc.default.fcgi
++	Alias /usr/lib/cgi-bin/ /mnt/www/
++
++	<Directory /mnt/www/>
++		Options Indexes FollowSymLinks MultiViews
++		AllowOverride None
++		Order allow,deny
++		allow from all
++	</Directory>
++
++	ErrorLog /var/www/log/apache.ssc.error.log
++
++	# Possible values include: debug, info, notice, warn, error, crit,
++	# alert, emerg.
++	LogLevel warn
++
++	CustomLog /var/www/log/apache.ssc.access.log combined
++
++</VirtualHost>

@@ -1,0 +1,20 @@
+diff -Naur /etc/mysql/my.cnf /etc/mysql/my.cnf
+--- /etc/mysql/my.cnf	2011-11-16 22:32:20.662972300 +0100
++++ /etc/mysql/my.cnf	2011-11-16 22:35:44.251324800 +0100
+@@ -120,6 +120,8 @@
+ # ssl-cert=/etc/mysql/server-cert.pem
+ # ssl-key=/etc/mysql/server-key.pem
+ 
++collation_server = utf8_unicode_ci
++character_set_server = utf8
+ 
+ 
+ [mysqldump]
+@@ -129,6 +131,7 @@
+ 
+ [mysql]
+ #no-auto-rehash	# faster start of mysql but no tab completition
++default-character-set = utf8
+ 
+ [isamchk]
+ key_buffer		= 16M

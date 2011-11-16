@@ -1,11 +1,9 @@
 #!/bin/bash
-
 SCRIPT_PATH="$( cd "$(dirname "$0")" && pwd )";
 
-# Install nginx
 aptitude -y install nginx > /dev/null
 
-cp $SCRIPT_PATH/conf/* /etc/nginx/ -R
+patch -u -p0 < $SCRIPT_PATH/patch.diff
 
 ln -s /etc/nginx/sites-available/ssc /etc/nginx/sites-enabled/
 ln -s /etc/nginx/sites-available/sf2 /etc/nginx/sites-enabled/

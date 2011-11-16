@@ -1,0 +1,244 @@
+diff -Naur orig-conf//sites-available/default conf//sites-available/default
+--- orig-conf//sites-available/default	2011-10-24 14:35:29.310900700 +0200
++++ conf//sites-available/default	2011-09-21 13:57:13.302734300 +0200
+@@ -1,117 +1,15 @@
+-# You may add here your
+-# server {
+-#	...
+-# }
+-# statements for each of your virtual hosts to this file
+-
+-##
+-# You should look at the following URL's in order to grasp a solid understanding
+-# of Nginx configuration files in order to fully unleash the power of Nginx.
+-# http://wiki.nginx.org/Pitfalls
+-# http://wiki.nginx.org/QuickStart
+-# http://wiki.nginx.org/Configuration
+-#
+-# Generally, you will want to move this file somewhere, and start with a clean
+-# file but keep this around for reference. Or just disable in sites-enabled.
+-#
+-# Please see /usr/share/doc/nginx-doc/examples/ for more detailed examples.
+-##
+-
+-server {
+-	#listen   80; ## listen for ipv4; this line is default and implied
+-	#listen   [::]:80 default ipv6only=on; ## listen for ipv6
+-
+-	root /usr/share/nginx/www;
+-	index index.html index.htm;
+-
+-	# Make site accessible from http://localhost/
+-	server_name localhost;
+-
+-	location / {
+-		# First attempt to serve request as file, then
+-		# as directory, then fall back to index.html
+-		try_files $uri $uri/ /index.html;
+-	}
+-
+-	location /doc {
+-		root /usr/share;
+-		autoindex on;
+-		allow 127.0.0.1;
+-		deny all;
+-	}
+-
+-	location /images {
+-		root /usr/share;
+-		autoindex off;
+-	}
+-
+-	#error_page 404 /404.html;
+-
+-	# redirect server error pages to the static page /50x.html
+-	#
+-	#error_page 500 502 503 504 /50x.html;
+-	#location = /50x.html {
+-	#	root /usr/share/nginx/www;
+-	#}
+-
+-	# proxy the PHP scripts to Apache listening on 127.0.0.1:80
+-	#
+-	#location ~ \.php$ {
+-	#	proxy_pass http://127.0.0.1;
+-	#}
+-
+-	# pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+-	#
+-	#location ~ \.php$ {
+-	#	fastcgi_pass 127.0.0.1:9000;
+-	#	fastcgi_index index.php;
+-	#	include fastcgi_params;
+-	#}
+-
+-	# deny access to .htaccess files, if Apache's document root
+-	# concurs with nginx's one
+-	#
+-	#location ~ /\.ht {
+-	#	deny all;
+-	#}
+-}
+-
+-
+-# another virtual host using mix of IP-, name-, and port-based configuration
+-#
+-#server {
+-#	listen 8000;
+-#	listen somename:8080;
+-#	server_name somename alias another.alias;
+-#	root html;
+-#	index index.html index.htm;
+-#
+-#	location / {
+-#		try_files $uri $uri/ /index.html;
+-#	}
+-#}
+-
+-
+-# HTTPS server
+-#
+-#server {
+-#	listen 443;
+-#	server_name localhost;
+-#
+-#	root html;
+-#	index index.html index.htm;
+-#
+-#	ssl on;
+-#	ssl_certificate cert.pem;
+-#	ssl_certificate_key cert.key;
+-#
+-#	ssl_session_timeout 5m;
+-#
+-#	ssl_protocols SSLv3 TLSv1;
+-#	ssl_ciphers ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv3:+EXP;
+-#	ssl_prefer_server_ciphers on;
+-#
+-#	location / {
+-#		try_files $uri $uri/ /index.html;
+-#	}
+-#}
++server {
++	listen 80;
++	server_name default.ssc;
++
++	root /var/www;
++	index index.php index.html index.htm;
++
++	access_log /var/www/log/nginx.default.access.log;
++	error_log /var/www/log/nginx.default.error.log;
++
++	location ~ \.php$ {
++		include fastcgi_params;
++		fastcgi_pass 127.0.0.1:9000;
++	}
++}
+diff -Naur orig-conf//sites-available/sf conf//sites-available/sf
+--- orig-conf//sites-available/sf	1970-01-01 01:00:00.000000000 +0100
++++ conf//sites-available/sf	2011-09-19 22:50:02.145507800 +0200
+@@ -0,0 +1,22 @@
++server {
++	listen 80;
++	server_name *.sf;
++
++	root /var/www/$host/web;
++	access_log /var/www/log/nginx.sf.access.log;
++	error_log /var/www/log/nginx.sf.error.log;
++
++	location / {
++		index index.php;
++		try_files $uri /index.php?$args;
++	}
++
++	location ^~ /sf/ {
++		alias /usr/share/php/data/symfony/web/sf/;
++	}
++
++	location ~ ^(index|frontend|frontend_dev|backend|backend_dev)\.php$ {
++		include fastcgi_params;
++		fastcgi_pass 127.0.0.1:9000;
++	}
++}
+diff -Naur orig-conf//sites-available/sf2 conf//sites-available/sf2
+--- orig-conf//sites-available/sf2	1970-01-01 01:00:00.000000000 +0100
++++ conf//sites-available/sf2	2011-10-26 09:51:08.728276200 +0200
+@@ -0,0 +1,28 @@
++server {
++	listen 80;
++	server_name *.sf2;
++
++	root /var/www/$host/web;
++	access_log /var/www/log/nginx.sf2.access.log;
++	error_log /var/www/log/nginx.sf2.error.log;
++
++	location / {
++		if (-f $request_filename) {
++			break;
++		}
++
++		set $app_index app_dev.php;
++		if ($http_cookie ~ "(; )?env=prod") {
++			set $app_index app.php;
++		}
++
++		index $app_index;
++
++		rewrite ^(.*)$ /$app_index last;
++	}
++
++	location ~ (app|app_dev).php {
++		fastcgi_pass 127.0.0.1:9000;
++		include fastcgi_params;
++	}
++}
+diff -Naur orig-conf//sites-available/ssc conf//sites-available/ssc
+--- orig-conf//sites-available/ssc	1970-01-01 01:00:00.000000000 +0100
++++ conf//sites-available/ssc	2011-09-19 22:47:11.362304600 +0200
+@@ -0,0 +1,46 @@
++server {
++	listen 80;
++	server_name *.ssc;
++
++	root /var/www/$host;
++	index index.php index.html index.htm;
++
++	access_log /var/www/log/nginx.ssc.access.log;
++	error_log /var/www/log/nginx.ssc.error.log;
++
++	location / {
++		# include the proxy-settings needed for apache
++		include proxy_params;
++
++		# If a .htaccess-file exists this host should maybe run in apache2
++		set $run_apache 0;
++		if (-f $document_root/.htaccess) {
++			set $run_apache 1;
++		}
++
++		# If a .nginx-file exists this host must not run in apache2
++		if (-f $document_root/.nginx) {
++			set $run_apache 0;
++		}
++
++		# Pass the request to apache2 if wanted and break.
++		if ($run_apache = 1) {
++			proxy_pass http://127.0.0.1:8080;
++			break;
++		}
++
++		# serve exising files, directories and symlinks directly
++		if (-e $request_filename) {
++			break;
++		}
++
++		# if it does not exist, pass it on to TYPO3
++		rewrite .* /index.php last;
++	}
++
++	location ~ \.php$ {
++		fastcgi_pass 127.0.0.1:9000;
++		include fastcgi_params;
++		fastcgi_param  SCRIPT_FILENAME  /var/www/$host/$fastcgi_script_name;
++	}
++}
