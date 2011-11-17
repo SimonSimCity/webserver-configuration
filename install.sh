@@ -31,7 +31,5 @@ echo Install and configure nginx
 
 read -p "Do you want to have Solr installed - preconfigured for TYPO3 (y/n)?"
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-	wget http://forge.typo3.org/projects/extension-solr/repository/raw/trunk/resources/shell/install-solr.sh
-	chmod +x install-solr.sh
-	./install-solr.sh
+	./solr/init.sh
 fi

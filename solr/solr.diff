@@ -1,0 +1,18 @@
+diff -Naur /opt/solr/tomcat/conf/Catalina/localhost/server.xml /opt/solr/tomcat/conf/Catalina/localhost/server.xml
+--- /opt/solr/tomcat/conf/Catalina/localhost/server.xml	2011-11-17 14:08:32.281112000 +0100
++++ /opt/solr/tomcat/conf/Catalina/localhost/server.xml	2011-11-17 14:10:13.487849300 +0100
+@@ -64,12 +64,11 @@
+          Java HTTP Connector: /docs/config/http.html (blocking & non-blocking)
+          Java AJP  Connector: /docs/config/ajp.html
+          APR (HTTP/AJP) Connector: /docs/apr.html
+-         Define a non-SSL HTTP/1.1 Connector on port 8080
++         Define a non-SSL HTTP/1.1 Connector on port 8090
+     -->
+-    <Connector port="8080" protocol="HTTP/1.1" 
++    <Connector port="8090" protocol="HTTP/1.1" 
+                connectionTimeout="20000" 
+                redirectPort="8443"
+-               address="127.0.0.1"
+                URIEncoding="UTF-8" />
+     <!-- A "Connector" using the shared thread pool-->
+     <!--
