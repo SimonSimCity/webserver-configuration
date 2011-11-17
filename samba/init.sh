@@ -1,12 +1,12 @@
 #!/bin/bash
 
 read -p "Command to recive the resources ip-address f.e. \"wins_getipaddress MYWINSHOST 192.168.56\" [ \"echo 192.168.56.1\" ]" host
-if [ -z "$host" ]
+if [ -z "$host" ]; then
 	host="echo 192.168.56.1"
 fi
 
 read -p "Have you used the script wins_getipaddress in the last step? (y/n) [ \"n\" ]"
-if [[ $REPLY =~ ^[Yy]$ ]]
+if [[ $REPLY =~ ^[Yy]$ ]]; then
 	cp wins_getipaddress.sh /sbin/
 fi
 
@@ -21,8 +21,7 @@ if [ -z "$path" ]; then
 fi
 
 # create directory if not exists or clean it up.
-if [[ -a /var/www/ ]]
-then
+if [[ -a /var/www/ ]]; then
 	read -p "Currently there are some files in /var/www/. We need to remove them. Do you want to proceed (y/n)?"
 	if [[ $REPLY =~ ^[Yy]$ ]]; then
 		rm /var/www/* -R
@@ -59,11 +58,11 @@ echo
 echo "This script has changed some settings in the file /etc/rc.local"
 echo "Ensure that the commands can be executed. In my case I allways have to move a \"exit 0\" line."
 read -p "Do you want to edit the file now? (y/n)"
-if [[ $REPLY =~ ^[Yy]$ ]]
+if [[ $REPLY =~ ^[Yy]$ ]]; then
 	editor /etc/rc.local
 fi
 
 read -p "Do you want to call the script /etc/rc.local now? (y/n)"
-if [[ $REPLY =~ ^[Yy]$ ]]
+if [[ $REPLY =~ ^[Yy]$ ]]; then
 	/etc/rc.local > /dev/null
 fi
