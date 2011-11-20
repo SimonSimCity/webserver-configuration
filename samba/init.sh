@@ -5,7 +5,7 @@ wwwroot="/var/www"
 
 read -p "File system: [ \"//192.168.56.1/htdocs\" ]" fs
 if [ -z "$fs" ]; then
-	fs="echo 192.168.56.1"
+	fs="//192.168.56.1/htdocs"
 fi
 
 read -p "Mountpoint: [ \"/mnt/www\" ]" mnt
