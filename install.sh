@@ -4,8 +4,11 @@ export DEBIAN_FRONTEND=noninteractive
 echo Register DotDeb as package resource
 ./apt/register-dotdeb.sh
 
-echo Install Samba-mount
-./samba/init.sh
+read -p "Do you have a samba shared folder you want to mount (y/n)? [ \"n\" ]"
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+	echo Install Samba-mount
+	./samba/init.sh
+fi
 
 # Programms I personally like ...
 echo Install htop
