@@ -1,6 +1,6 @@
-diff -Naur /etc/php5/cli/php.ini /etc/php5/cli/php.ini
---- /etc/php5/cli/php.ini	2011-10-29 11:06:47.063107200 +0200
-+++ /etc/php5/cli/php.ini	2011-10-29 11:03:19.685773600 +0200
+diff -Paur ../orig-conf/cli/php.ini ./cli/php.ini
+--- ../orig-conf/cli/php.ini	2011-10-29 09:06:47.063107200 +0000
++++ ./cli/php.ini	2011-10-29 09:03:19.685773600 +0000
 @@ -259,7 +259,7 @@
  ; Development Value: 4096
  ; Production Value: 4096
@@ -73,9 +73,9 @@ diff -Naur /etc/php5/cli/php.ini /etc/php5/cli/php.ini
  
  ; http://php.net/date.default-latitude
  ;date.default_latitude = 31.7667
-diff -Naur /etc/php5/fpm/php.ini /etc/php5/fpm/php.ini
---- /etc/php5/fpm/php.ini	2011-10-29 11:06:47.158619300 +0200
-+++ /etc/php5/fpm/php.ini	2011-10-29 11:05:33.990828200 +0200
+diff -Paur ../orig-conf/fpm/php.ini ./fpm/php.ini
+--- ../orig-conf/fpm/php.ini	2011-10-29 09:06:47.158619300 +0000
++++ ./fpm/php.ini	2011-10-29 09:05:33.990828200 +0000
 @@ -259,7 +259,7 @@
  ; Development Value: 4096
  ; Production Value: 4096

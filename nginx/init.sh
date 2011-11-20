@@ -3,7 +3,7 @@ SCRIPT_PATH="$( cd "$(dirname "$0")" && pwd )";
 
 aptitude -y install nginx > /dev/null
 
-patch -u -p0 < $SCRIPT_PATH/patch.diff
+patch -u -p0 -d /etc/nginx < $SCRIPT_PATH/patch.diff
 
 ln -s /etc/nginx/sites-available/ssc /etc/nginx/sites-enabled/
 ln -s /etc/nginx/sites-available/sf2 /etc/nginx/sites-enabled/

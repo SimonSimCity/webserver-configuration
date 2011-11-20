@@ -1,6 +1,6 @@
-diff -Naur orig-conf//ports.conf conf//ports.conf
---- orig-conf//ports.conf	2011-10-24 14:31:19.172900700 +0200
-+++ conf//ports.conf	2011-09-05 19:33:27.992187500 +0200
+diff -Paur ../orig-conf/ports.conf ./ports.conf
+--- ../orig-conf/ports.conf	2011-10-24 12:31:19.172900700 +0000
++++ ./ports.conf	2011-09-05 17:33:27.992187500 +0000
 @@ -1,23 +1,10 @@
 -# If you just change the port or add more ports here, you will likely also
 -# have to change the VirtualHost statement in
@@ -35,9 +35,9 @@ diff -Naur orig-conf//ports.conf conf//ports.conf
 +<IfModule mod_gnutls.c>
 +	Listen 127.0.0.1:8443
 +</IfModule>
-diff -Naur orig-conf//sites-available/default conf//sites-available/default
---- orig-conf//sites-available/default	2011-10-24 14:31:20.195400700 +0200
-+++ conf//sites-available/default	2011-09-05 18:55:40.129882800 +0200
+diff -Paur ../orig-conf/sites-available/default ./sites-available/default
+--- ../orig-conf/sites-available/default	2011-10-24 12:31:20.195400700 +0000
++++ ./sites-available/default	2011-09-05 16:55:40.129882800 +0000
 @@ -1,11 +1,14 @@
 -<VirtualHost *:80>
 +<VirtualHost 127.0.0.1:8080>
@@ -87,9 +87,9 @@ diff -Naur orig-conf//sites-available/default conf//sites-available/default
 -    </Directory>
 -
  </VirtualHost>
-diff -Naur orig-conf//sites-available/default-ssl conf//sites-available/default-ssl
---- orig-conf//sites-available/default-ssl	2011-10-24 14:31:20.199400700 +0200
-+++ conf//sites-available/default-ssl	2011-09-05 18:55:56.995117100 +0200
+diff -Paur ../orig-conf/sites-available/default-ssl ./sites-available/default-ssl
+--- ../orig-conf/sites-available/default-ssl	2011-10-24 12:31:20.199400700 +0000
++++ ./sites-available/default-ssl	2011-09-05 16:55:56.995117100 +0000
 @@ -1,12 +1,15 @@
  <IfModule mod_ssl.c>
 -<VirtualHost _default_:443>
@@ -142,9 +142,9 @@ diff -Naur orig-conf//sites-available/default-ssl conf//sites-available/default-
  	#   SSL Engine Switch:
  	#   Enable/Disable SSL for this virtual host.
  	SSLEngine on
-diff -Naur orig-conf//sites-available/ssc conf//sites-available/ssc
---- orig-conf//sites-available/ssc	1970-01-01 01:00:00.000000000 +0100
-+++ conf//sites-available/ssc	2011-09-21 09:00:43.639648400 +0200
+diff -Paur ../orig-conf/sites-available/ssc ./sites-available/ssc
+--- ../orig-conf/sites-available/ssc	1970-01-01 00:00:00.000000000 +0000
++++ ./sites-available/ssc	2011-09-21 07:00:43.639648400 +0000
 @@ -0,0 +1,29 @@
 +<VirtualHost 127.0.0.1:8080>
 +	ServerAdmin webmaster@localhost

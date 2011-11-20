@@ -2,7 +2,7 @@
 SCRIPT_PATH="$( cd "$(dirname "$0")" && pwd )";
 
 aptitude -y install mysql-server > /dev/null
-patch -u -p0 < patch.diff
+patch -u -p0 -d /etc/mysql < $SCRIPT_PATH/patch.diff
 
 read -p "Do you want to have a mysql-user %everyone% using no password (y/n)?"
 if [[ $REPLY =~ ^[Yy]$ ]]; then
