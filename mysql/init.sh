@@ -4,11 +4,7 @@ SCRIPT_PATH="$( cd "$(dirname "$0")" && pwd )";
 aptitude -y install mysql-server > /dev/null
 patch -u -p0 -d /etc/mysql < $SCRIPT_PATH/patch.diff
 
-read -p "Do you want to have a mysql-user %everyone% using no password (y/n)?"
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-	mysql -u root < ./mysql/init.sql
-fi
-
+echo
 read -p "Do you want to import all sql-files matching /var/www/install-*.sql (y/n)?"
 if [[ $REPLY =~ ^[Yy]$ ]]; then
 	for fn in /var/www/install-*.sql; do
@@ -16,8 +12,9 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
 	done
 fi
 
-read -s -p "Please insert your mysql root-password: " mysqlpassword
 echo
-if [ -n "$mysqlpassword" ]; then
-	mysqladmin -u root password $mysqlpassword
+echo "The password for the mysql-user root is empty."
+read -p "Do you want to run mysql_secure_installation now to secure your server (y/n)?"
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+	mysql_secure_installation
 fi
