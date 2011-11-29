@@ -1,0 +1,55 @@
+diff -Paur ../orig-conf/db.192.168.56 ./db.192.168.56
+--- ../orig-conf/db.192.168.56	1970-01-01 00:00:00.000000000 +0000
++++ ./db.192.168.56	2011-11-29 19:13:47.088061400 +0000
+@@ -0,0 +1,13 @@
++;
++; BIND reverse data file for local loopback interface
++;
++$TTL	604800
++@	IN	SOA	default.ssc. root.default.ssc. (
++			      1		; Serial
++			 604800		; Refresh
++			  86400		; Retry
++			2419200		; Expire
++			 604800 )	; Negative Cache TTL
++;
++@	IN	NS	default.ssc.
++10	IN	PTR	default.ssc.
+diff -Paur ../orig-conf/db.ssc ./db.ssc
+--- ../orig-conf/db.ssc	1970-01-01 00:00:00.000000000 +0000
++++ ./db.ssc	2011-11-29 19:13:41.996414800 +0000
+@@ -0,0 +1,13 @@
++;
++; BIND data file for local loopback interface
++;
++$TTL	604800
++@	IN	SOA	default.ssc. root.default.ssc. (
++			      2		; Serial
++			 604800		; Refresh
++			  86400		; Retry
++			2419200		; Expire
++			 604800 )	; Negative Cache TTL
++;
++@	IN	NS	default.ssc.
++*.ssc.	IN	A	192.168.56.10
+diff -Paur ../orig-conf/named.conf ./named.conf
+--- ../orig-conf/named.conf	2011-11-29 19:20:24.040467900 +0000
++++ ./named.conf	2011-11-29 19:13:58.607024100 +0000
+@@ -9,3 +9,4 @@
+ include "/etc/bind/named.conf.options";
+ include "/etc/bind/named.conf.local";
+ include "/etc/bind/named.conf.default-zones";
++include "/etc/bind/named.conf.user-zones";
+diff -Paur ../orig-conf/named.conf.user-zones ./named.conf.user-zones
+--- ../orig-conf/named.conf.user-zones	1970-01-01 00:00:00.000000000 +0000
++++ ./named.conf.user-zones	2011-11-29 19:13:27.683597300 +0000
+@@ -0,0 +1,9 @@
++zone "ssc" {
++	type master;
++	file "/etc/bind/db.ssc";
++};
++
++zone "56.168.192.in-addr.arpa" {
++	type master;
++	file "/etc/bind/db.192.168.56";
++};

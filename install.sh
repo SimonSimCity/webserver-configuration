@@ -14,6 +14,9 @@ fi
 echo Install htop
 aptitude -y install htop > /dev/null
 
+echo Install and configure Bind9
+./bind9/init.sh
+
 echo Install and configure MySQL
 ./mysql/init.sh
 
