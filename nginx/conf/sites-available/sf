@@ -15,7 +15,7 @@ server {
 		alias /usr/share/php/data/symfony/web/sf/;
 	}
 
-	location ~ ^(index|frontend|frontend_dev|backend|backend_dev)\.php$ {
+	location ~ (index|frontend|frontend_dev|backend|backend_dev)\.php$ {
 		include fastcgi_params;
 		fastcgi_pass 127.0.0.1:9000;
 	}
