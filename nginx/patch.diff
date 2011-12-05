@@ -3,6 +3,29 @@ diff -Paur ../orig-conf/conf.d/index.conf ./conf.d/index.conf
 +++ ./conf.d/index.conf	2011-09-05 21:10:34.537109300 +0000
 @@ -0,0 +1 @@
 +index index.html index.htm index.php;
+diff -Paur ../orig-conf/fastcgi_params ./fastcgi_params
+--- ../orig-conf/fastcgi_params	2011-10-24 12:35:29.169400700 +0000
++++ ./fastcgi_params	2011-12-05 08:03:45.962856500 +0000
+@@ -3,13 +3,18 @@
+ fastcgi_param	CONTENT_TYPE		$content_type;
+ fastcgi_param	CONTENT_LENGTH		$content_length;
+ 
+-fastcgi_param	SCRIPT_FILENAME		$request_filename;
++#fastcgi_param	SCRIPT_FILENAME		$request_filename;
+ fastcgi_param	SCRIPT_NAME		$fastcgi_script_name;
+ fastcgi_param	REQUEST_URI		$request_uri;
+ fastcgi_param	DOCUMENT_URI		$document_uri;
+ fastcgi_param	DOCUMENT_ROOT		$document_root;
+ fastcgi_param	SERVER_PROTOCOL		$server_protocol;
+ 
++fastcgi_split_path_info ^((?U).+\.php)(/?.+)$;
++fastcgi_param	SCRIPT_FILENAME		$document_root$fastcgi_script_name;
++fastcgi_param	PATH_INFO		$fastcgi_path_info;
++fastcgi_param	PATH_TRANSLATED		$document_root$fastcgi_path_info;
++
+ fastcgi_param	GATEWAY_INTERFACE	CGI/1.1;
+ fastcgi_param	SERVER_SOFTWARE		nginx/$nginx_version;
+ 
 diff -Paur ../orig-conf/sites-available/default ./sites-available/default
 --- ../orig-conf/sites-available/default	2011-10-24 12:35:29.310900700 +0000
 +++ ./sites-available/default	2011-09-21 11:57:13.302734300 +0000
