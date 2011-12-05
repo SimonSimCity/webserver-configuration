@@ -8,7 +8,7 @@ server {
 	access_log /var/www/log/nginx.default.access.log;
 	error_log /var/www/log/nginx.default.error.log;
 
-	location ~ \.php$ {
+	location ~ \.php($|/) {
 		include fastcgi_params;
 		fastcgi_pass 127.0.0.1:9000;
 	}
