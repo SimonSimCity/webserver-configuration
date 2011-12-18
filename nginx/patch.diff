@@ -5,8 +5,8 @@ diff -Paur ../orig-conf/conf.d/index.conf ./conf.d/index.conf
 +index index.html index.htm index.php;
 diff -Paur ../orig-conf/fastcgi_params ./fastcgi_params
 --- ../orig-conf/fastcgi_params	2011-10-24 12:35:29.169400700 +0000
-+++ ./fastcgi_params	2011-12-05 08:03:45.962856500 +0000
-@@ -3,13 +3,18 @@
++++ ./fastcgi_params	2011-12-18 13:37:51.892928000 +0000
+@@ -3,13 +3,22 @@
  fastcgi_param	CONTENT_TYPE		$content_type;
  fastcgi_param	CONTENT_LENGTH		$content_length;
  
@@ -18,10 +18,14 @@ diff -Paur ../orig-conf/fastcgi_params ./fastcgi_params
  fastcgi_param	DOCUMENT_ROOT		$document_root;
  fastcgi_param	SERVER_PROTOCOL		$server_protocol;
  
-+fastcgi_split_path_info ^((?U).+\.php)(/?.+)$;
-+fastcgi_param	SCRIPT_FILENAME		$document_root$fastcgi_script_name;
++fastcgi_split_path_info ^(.+\.php)(/.*)$;
 +fastcgi_param	PATH_INFO		$fastcgi_path_info;
-+fastcgi_param	PATH_TRANSLATED		$document_root$fastcgi_path_info;
++set 		$path_translated	"";
++if ($fastcgi_path_info) {
++	set 	$path_translated	$document_root$fastcgi_path_info;
++}
++fastcgi_param	PATH_TRANSLATED		$path_translated;
++fastcgi_param	SCRIPT_FILENAME		$document_root$fastcgi_script_name;
 +
  fastcgi_param	GATEWAY_INTERFACE	CGI/1.1;
  fastcgi_param	SERVER_SOFTWARE		nginx/$nginx_version;
@@ -221,8 +225,8 @@ diff -Paur ../orig-conf/sites-available/sf2 ./sites-available/sf2
 +}
 diff -Paur ../orig-conf/sites-available/ssc ./sites-available/ssc
 --- ../orig-conf/sites-available/ssc	1970-01-01 00:00:00.000000000 +0000
-+++ ./sites-available/ssc	2011-09-19 20:47:11.362304600 +0000
-@@ -0,0 +1,46 @@
++++ ./sites-available/ssc	2011-12-18 13:47:33.401770300 +0000
+@@ -0,0 +1,45 @@
 +server {
 +	listen 80;
 +	server_name *.ssc;
@@ -266,6 +270,5 @@ diff -Paur ../orig-conf/sites-available/ssc ./sites-available/ssc
 +	location ~ \.php($|/) {
 +		fastcgi_pass 127.0.0.1:9000;
 +		include fastcgi_params;
-+		fastcgi_param  SCRIPT_FILENAME  /var/www/$host/$fastcgi_script_name;
 +	}
 +}
