@@ -1,10 +1,10 @@
 diff -Paur ../orig-conf/conf.d/index.conf ./conf.d/index.conf
 --- ../orig-conf/conf.d/index.conf	1970-01-01 00:00:00.000000000 +0000
-+++ ./conf.d/index.conf	2011-09-05 21:10:34.537109300 +0000
++++ ./conf.d/index.conf	2012-03-06 07:35:23.520873600 +0000
 @@ -0,0 +1 @@
-+index index.html index.htm index.php;
++index index.php index.html index.htm;
 diff -Paur ../orig-conf/fastcgi_params ./fastcgi_params
---- ../orig-conf/fastcgi_params	2011-10-24 12:35:29.169400700 +0000
+--- ../orig-conf/fastcgi_params	2011-12-16 19:12:23.000000000 +0000
 +++ ./fastcgi_params	2011-12-18 13:37:51.892928000 +0000
 @@ -3,13 +3,22 @@
  fastcgi_param	CONTENT_TYPE		$content_type;
@@ -32,8 +32,8 @@ diff -Paur ../orig-conf/fastcgi_params ./fastcgi_params
  
 diff -Paur ../orig-conf/sites-available/default ./sites-available/default
 --- ../orig-conf/sites-available/default	2012-02-07 16:15:50.000000000 +0000
-+++ ./sites-available/default	2011-12-18 13:46:34.237257300 +0000
-@@ -1,109 +1,15 @@
++++ ./sites-available/default	2012-03-06 07:35:07.064583000 +0000
+@@ -1,109 +1,13 @@
 -# You may add here your
 -# server {
 -#	...
@@ -148,8 +148,6 @@ diff -Paur ../orig-conf/sites-available/default ./sites-available/default
 +	server_name default.ssc;
 +
 +	root /var/www;
-+	index index.php index.html index.htm;
-+
 +	access_log /var/www/log/nginx.default.access.log;
 +	error_log /var/www/log/nginx.default.error.log;
 +
@@ -217,15 +215,13 @@ diff -Paur ../orig-conf/sites-available/sf2 ./sites-available/sf2
 +}
 diff -Paur ../orig-conf/sites-available/ssc ./sites-available/ssc
 --- ../orig-conf/sites-available/ssc	1970-01-01 00:00:00.000000000 +0000
-+++ ./sites-available/ssc	2011-12-18 13:52:23.955165900 +0000
-@@ -0,0 +1,45 @@
++++ ./sites-available/ssc	2012-03-06 07:35:09.433556700 +0000
+@@ -0,0 +1,43 @@
 +server {
 +	listen 80;
 +	server_name *.ssc;
 +
 +	root /var/www/$host;
-+	index index.php index.html index.htm;
-+
 +	access_log /var/www/log/nginx.ssc.access.log;
 +	error_log /var/www/log/nginx.ssc.error.log;
 +
