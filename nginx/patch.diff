@@ -31,9 +31,9 @@ diff -Paur ../orig-conf/fastcgi_params ./fastcgi_params
  fastcgi_param	SERVER_SOFTWARE		nginx/$nginx_version;
  
 diff -Paur ../orig-conf/sites-available/default ./sites-available/default
---- ../orig-conf/sites-available/default	2011-10-24 12:35:29.310900700 +0000
+--- ../orig-conf/sites-available/default	2012-02-07 16:15:50.000000000 +0000
 +++ ./sites-available/default	2011-12-18 13:46:34.237257300 +0000
-@@ -1,117 +1,15 @@
+@@ -1,109 +1,15 @@
 -# You may add here your
 -# server {
 -#	...
@@ -55,7 +55,7 @@ diff -Paur ../orig-conf/sites-available/default ./sites-available/default
 -
 -server {
 -	#listen   80; ## listen for ipv4; this line is default and implied
--	#listen   [::]:80 default ipv6only=on; ## listen for ipv6
+-	#listen   [::]:80 default_server ipv6only=on; ## listen for ipv6
 -
 -	root /usr/share/nginx/www;
 -	index index.html index.htm;
@@ -69,16 +69,11 @@ diff -Paur ../orig-conf/sites-available/default ./sites-available/default
 -		try_files $uri $uri/ /index.html;
 -	}
 -
--	location /doc {
--		root /usr/share;
+-	location /doc/ {
+-		alias /usr/share/doc;
 -		autoindex on;
 -		allow 127.0.0.1;
 -		deny all;
--	}
--
--	location /images {
--		root /usr/share;
--		autoindex off;
 -	}
 -
 -	#error_page 404 /404.html;
@@ -90,15 +85,12 @@ diff -Paur ../orig-conf/sites-available/default ./sites-available/default
 -	#	root /usr/share/nginx/www;
 -	#}
 -
--	# proxy the PHP scripts to Apache listening on 127.0.0.1:80
--	#
--	#location ~ \.php$ {
--	#	proxy_pass http://127.0.0.1;
--	#}
--
 -	# pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
 -	#
 -	#location ~ \.php$ {
+-	#	fastcgi_split_path_info ^(.+\.php)(/.+)$;
+-	#	# NOTE: You should have "cgi.fix_pathinfo = 0;" in php.ini
+-	#
 -	#	fastcgi_pass 127.0.0.1:9000;
 -	#	fastcgi_index index.php;
 -	#	include fastcgi_params;
@@ -193,7 +185,7 @@ diff -Paur ../orig-conf/sites-available/sf ./sites-available/sf
 +}
 diff -Paur ../orig-conf/sites-available/sf2 ./sites-available/sf2
 --- ../orig-conf/sites-available/sf2	1970-01-01 00:00:00.000000000 +0000
-+++ ./sites-available/sf2	2011-12-18 13:47:35.816076900 +0000
++++ ./sites-available/sf2	2011-12-18 13:52:20.558234500 +0000
 @@ -0,0 +1,28 @@
 +server {
 +	listen 80;
@@ -219,13 +211,13 @@ diff -Paur ../orig-conf/sites-available/sf2 ./sites-available/sf2
 +	}
 +
 +	location ~ (app|app_dev).php {
-+		fastcgi_pass 127.0.0.1:9000;
 +		include fastcgi_params;
++		fastcgi_pass 127.0.0.1:9000;
 +	}
 +}
 diff -Paur ../orig-conf/sites-available/ssc ./sites-available/ssc
 --- ../orig-conf/sites-available/ssc	1970-01-01 00:00:00.000000000 +0000
-+++ ./sites-available/ssc	2011-12-18 13:47:33.401770300 +0000
++++ ./sites-available/ssc	2011-12-18 13:52:23.955165900 +0000
 @@ -0,0 +1,45 @@
 +server {
 +	listen 80;
@@ -268,7 +260,7 @@ diff -Paur ../orig-conf/sites-available/ssc ./sites-available/ssc
 +	}
 +
 +	location ~ \.php($|/) {
-+		fastcgi_pass 127.0.0.1:9000;
 +		include fastcgi_params;
++		fastcgi_pass 127.0.0.1:9000;
 +	}
 +}

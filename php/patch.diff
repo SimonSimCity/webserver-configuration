@@ -1,6 +1,6 @@
 diff -Paur ../orig-conf/cli/php.ini ./cli/php.ini
---- ../orig-conf/cli/php.ini	2011-10-29 09:06:47.063107200 +0000
-+++ ./cli/php.ini	2011-10-29 09:03:19.685773600 +0000
+--- ../orig-conf/cli/php.ini	2012-03-06 12:00:19.941992700 +0000
++++ ./cli/php.ini	2012-03-06 12:07:34.525492700 +0000
 @@ -259,7 +259,7 @@
  ; Development Value: 4096
  ; Production Value: 4096
@@ -10,7 +10,7 @@ diff -Paur ../orig-conf/cli/php.ini ./cli/php.ini
  
  ; You can redirect all of the output of your scripts to a function.  For
  ; example, if you set output_handler to "mb_output_handler", character
-@@ -511,7 +511,7 @@
+@@ -518,7 +518,7 @@
  ; Development Value: E_ALL | E_STRICT
  ; Production Value: E_ALL & ~E_DEPRECATED
  ; http://php.net/error-reporting
@@ -19,7 +19,7 @@ diff -Paur ../orig-conf/cli/php.ini ./cli/php.ini
  
  ; This directive controls whether or not and where PHP will output errors,
  ; notices and warnings too. Error output is very useful during development, but
-@@ -528,7 +528,7 @@
+@@ -535,7 +535,7 @@
  ; Development Value: On
  ; Production Value: Off
  ; http://php.net/display-errors
@@ -28,7 +28,7 @@ diff -Paur ../orig-conf/cli/php.ini ./cli/php.ini
  
  ; The display of errors which occur during PHP's startup sequence are handled
  ; separately from display_errors. PHP's default behavior is to suppress those
-@@ -539,7 +539,7 @@
+@@ -546,7 +546,7 @@
  ; Development Value: On
  ; Production Value: Off
  ; http://php.net/display-startup-errors
@@ -37,7 +37,7 @@ diff -Paur ../orig-conf/cli/php.ini ./cli/php.ini
  
  ; Besides displaying errors, PHP can also log errors to locations such as a
  ; server-specific log, STDERR, or a location specified by the error_log
-@@ -583,7 +583,7 @@
+@@ -590,7 +590,7 @@
  ; Development Value: On
  ; Production Value: Off
  ; http://php.net/track-errors
@@ -46,7 +46,7 @@ diff -Paur ../orig-conf/cli/php.ini ./cli/php.ini
  
  ; Turn off normal error reporting and emit XML-RPC error XML
  ; http://php.net/xmlrpc-errors
-@@ -601,7 +601,7 @@
+@@ -608,7 +608,7 @@
  ; Development Value: On
  ; Production value: Off
  ; http://php.net/html-errors
@@ -55,7 +55,7 @@ diff -Paur ../orig-conf/cli/php.ini ./cli/php.ini
  
  ; If html_errors is set On PHP produces clickable error messages that direct
  ; to a page describing the error or function causing the error in detail.
-@@ -781,7 +781,7 @@
+@@ -793,7 +793,7 @@
  ;;;;;;;;;;;;;;;;;;;;;;;;;
  
  ; UNIX: "/path1:/path2"
@@ -64,7 +64,7 @@ diff -Paur ../orig-conf/cli/php.ini ./cli/php.ini
  ;
  ; Windows: "\path1;\path2"
  ;include_path = ".;c:\php\includes"
-@@ -945,7 +945,7 @@
+@@ -957,7 +957,7 @@
  [Date]
  ; Defines the default timezone used by the date functions
  ; http://php.net/date.timezone
@@ -74,8 +74,8 @@ diff -Paur ../orig-conf/cli/php.ini ./cli/php.ini
  ; http://php.net/date.default-latitude
  ;date.default_latitude = 31.7667
 diff -Paur ../orig-conf/fpm/php.ini ./fpm/php.ini
---- ../orig-conf/fpm/php.ini	2011-10-29 09:06:47.158619300 +0000
-+++ ./fpm/php.ini	2011-10-29 09:05:33.990828200 +0000
+--- ../orig-conf/fpm/php.ini	2012-03-06 12:05:06.194992700 +0000
++++ ./fpm/php.ini	2012-03-06 12:07:47.211992700 +0000
 @@ -259,7 +259,7 @@
  ; Development Value: 4096
  ; Production Value: 4096
@@ -85,7 +85,7 @@ diff -Paur ../orig-conf/fpm/php.ini ./fpm/php.ini
  
  ; You can redirect all of the output of your scripts to a function.  For
  ; example, if you set output_handler to "mb_output_handler", character
-@@ -511,7 +511,7 @@
+@@ -518,7 +518,7 @@
  ; Development Value: E_ALL | E_STRICT
  ; Production Value: E_ALL & ~E_DEPRECATED
  ; http://php.net/error-reporting
@@ -94,7 +94,7 @@ diff -Paur ../orig-conf/fpm/php.ini ./fpm/php.ini
  
  ; This directive controls whether or not and where PHP will output errors,
  ; notices and warnings too. Error output is very useful during development, but
-@@ -528,7 +528,7 @@
+@@ -535,7 +535,7 @@
  ; Development Value: On
  ; Production Value: Off
  ; http://php.net/display-errors
@@ -103,7 +103,7 @@ diff -Paur ../orig-conf/fpm/php.ini ./fpm/php.ini
  
  ; The display of errors which occur during PHP's startup sequence are handled
  ; separately from display_errors. PHP's default behavior is to suppress those
-@@ -539,7 +539,7 @@
+@@ -546,7 +546,7 @@
  ; Development Value: On
  ; Production Value: Off
  ; http://php.net/display-startup-errors
@@ -112,7 +112,7 @@ diff -Paur ../orig-conf/fpm/php.ini ./fpm/php.ini
  
  ; Besides displaying errors, PHP can also log errors to locations such as a
  ; server-specific log, STDERR, or a location specified by the error_log
-@@ -583,7 +583,7 @@
+@@ -590,7 +590,7 @@
  ; Development Value: On
  ; Production Value: Off
  ; http://php.net/track-errors
@@ -121,7 +121,7 @@ diff -Paur ../orig-conf/fpm/php.ini ./fpm/php.ini
  
  ; Turn off normal error reporting and emit XML-RPC error XML
  ; http://php.net/xmlrpc-errors
-@@ -601,7 +601,7 @@
+@@ -608,7 +608,7 @@
  ; Development Value: On
  ; Production value: Off
  ; http://php.net/html-errors
@@ -130,7 +130,7 @@ diff -Paur ../orig-conf/fpm/php.ini ./fpm/php.ini
  
  ; If html_errors is set On PHP produces clickable error messages that direct
  ; to a page describing the error or function causing the error in detail.
-@@ -781,7 +781,7 @@
+@@ -793,7 +793,7 @@
  ;;;;;;;;;;;;;;;;;;;;;;;;;
  
  ; UNIX: "/path1:/path2"
@@ -139,7 +139,7 @@ diff -Paur ../orig-conf/fpm/php.ini ./fpm/php.ini
  ;
  ; Windows: "\path1;\path2"
  ;include_path = ".;c:\php\includes"
-@@ -945,7 +945,7 @@
+@@ -957,7 +957,7 @@
  [Date]
  ; Defines the default timezone used by the date functions
  ; http://php.net/date.timezone
