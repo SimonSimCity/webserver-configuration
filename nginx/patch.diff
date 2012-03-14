@@ -1,3 +1,26 @@
+diff -Paur ../orig-conf/apache_if_needed ./apache_if_needed
+--- ../orig-conf/apache_if_needed	1970-01-01 00:00:00.000000000 +0000
++++ ./apache_if_needed	2012-03-14 08:28:25.274157400 +0000
+@@ -0,0 +1,19 @@
++# include the proxy-settings needed for apache (not allowed in condition)
++include proxy_params;
++
++# If a .htaccess-file exists this host should maybe run in apache2
++set $run_apache 0;
++if (-f $document_root/.htaccess) {
++	set $run_apache 1;
++}
++
++# If a .nginx-file exists this host must not run in apache2
++if (-f $document_root/.nginx) {
++	set $run_apache 0;
++}
++
++# Pass the request to apache2 if wanted and break.
++if ($run_apache = 1) {
++	proxy_pass http://127.0.0.1:8080;
++	break;
++}
 diff -Paur ../orig-conf/conf.d/index.conf ./conf.d/index.conf
 --- ../orig-conf/conf.d/index.conf	1970-01-01 00:00:00.000000000 +0000
 +++ ./conf.d/index.conf	2012-03-06 07:35:23.520873600 +0000
@@ -215,8 +238,8 @@ diff -Paur ../orig-conf/sites-available/sf2 ./sites-available/sf2
 +}
 diff -Paur ../orig-conf/sites-available/ssc ./sites-available/ssc
 --- ../orig-conf/sites-available/ssc	1970-01-01 00:00:00.000000000 +0000
-+++ ./sites-available/ssc	2012-03-06 07:35:09.433556700 +0000
-@@ -0,0 +1,43 @@
++++ ./sites-available/ssc	2012-03-14 08:30:21.457389400 +0000
+@@ -0,0 +1,29 @@
 +server {
 +	listen 80;
 +	server_name *.ssc;
@@ -226,36 +249,22 @@ diff -Paur ../orig-conf/sites-available/ssc ./sites-available/ssc
 +	error_log /var/www/log/nginx.ssc.error.log;
 +
 +	location / {
-+		# include the proxy-settings needed for apache
-+		include proxy_params;
-+
-+		# If a .htaccess-file exists this host should maybe run in apache2
-+		set $run_apache 0;
-+		if (-f $document_root/.htaccess) {
-+			set $run_apache 1;
-+		}
-+
-+		# If a .nginx-file exists this host must not run in apache2
-+		if (-f $document_root/.nginx) {
-+			set $run_apache 0;
-+		}
-+
-+		# Pass the request to apache2 if wanted and break.
-+		if ($run_apache = 1) {
-+			proxy_pass http://127.0.0.1:8080;
-+			break;
-+		}
++		# Run apache if needed (script may be stopped!)
++		include apache_if_needed;
 +
 +		# serve exising files, directories and symlinks directly
 +		if (-e $request_filename) {
 +			break;
 +		}
 +
-+		# if it does not exist, pass it on to TYPO3
++		# if it does not exist, pass it to index.php
 +		rewrite .* /index.php last;
 +	}
 +
 +	location ~ \.php($|/) {
++		# Run apache if needed (script may be stopped!)
++		include apache_if_needed;
++
 +		include fastcgi_params;
 +		fastcgi_pass 127.0.0.1:9000;
 +	}
