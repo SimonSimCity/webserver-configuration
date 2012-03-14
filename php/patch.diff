@@ -1,6 +1,6 @@
 diff -Paur ../orig-conf/cli/php.ini ./cli/php.ini
 --- ../orig-conf/cli/php.ini	2012-03-06 12:00:19.941992700 +0000
-+++ ./cli/php.ini	2012-03-06 12:07:34.525492700 +0000
++++ ./cli/php.ini	2012-03-14 19:31:25.047886300 +0000
 @@ -259,7 +259,7 @@
  ; Development Value: 4096
  ; Production Value: 4096
@@ -73,9 +73,34 @@ diff -Paur ../orig-conf/cli/php.ini ./cli/php.ini
  
  ; http://php.net/date.default-latitude
  ;date.default_latitude = 31.7667
+diff -Paur ../orig-conf/conf.d/apc.ini ./conf.d/apc.ini
+--- ../orig-conf/conf.d/apc.ini	2012-02-03 00:59:31.000000000 +0000
++++ ./conf.d/apc.ini	2011-12-20 14:47:21.000000000 +0000
+@@ -1,2 +1,3 @@
+ ; configuration for php apc module
+ extension=apc.so
++apc.enable_cli=1
+diff -Paur ../orig-conf/conf.d/xdebug.ini ./conf.d/xdebug.ini
+--- ../orig-conf/conf.d/xdebug.ini	2012-02-03 01:06:01.000000000 +0000
++++ ./conf.d/xdebug.ini	2012-03-14 19:23:50.416155400 +0000
+@@ -1,2 +1,14 @@
+ ; configuration for php xdebug module
+ zend_extension=/usr/lib/php5/20090626/xdebug.so
++
++xdebug.cli_color=1
++
++xdebug.trace_enable_trigger=1
++xdebug.trace_output_dir=/var/www/log/
++
++xdebug.profiler_enable_trigger=1
++xdebug.profiler_output_dir=/var/www/log/
++
++xdebug.remote_connect_back=1
++xdebug.remote_enable=1
++;xdebug.remote_autostart=1
 diff -Paur ../orig-conf/fpm/php.ini ./fpm/php.ini
 --- ../orig-conf/fpm/php.ini	2012-03-06 12:05:06.194992700 +0000
-+++ ./fpm/php.ini	2012-03-06 12:07:47.211992700 +0000
++++ ./fpm/php.ini	2012-03-14 19:34:03.264977300 +0000
 @@ -259,7 +259,7 @@
  ; Development Value: 4096
  ; Production Value: 4096
@@ -85,6 +110,15 @@ diff -Paur ../orig-conf/fpm/php.ini ./fpm/php.ini
  
  ; You can redirect all of the output of your scripts to a function.  For
  ; example, if you set output_handler to "mb_output_handler", character
+@@ -441,7 +441,7 @@
+ ; Maximum execution time of each script, in seconds
+ ; http://php.net/max-execution-time
+ ; Note: This directive is hardcoded to 0 for the CLI SAPI
+-max_execution_time = 30
++max_execution_time = 300
+ 
+ ; Maximum amount of time each script may spend parsing request data. It's a good
+ ; idea to limit this time on productions servers in order to eliminate unexpectedly
 @@ -518,7 +518,7 @@
  ; Development Value: E_ALL | E_STRICT
  ; Production Value: E_ALL & ~E_DEPRECATED
@@ -130,6 +164,15 @@ diff -Paur ../orig-conf/fpm/php.ini ./fpm/php.ini
  
  ; If html_errors is set On PHP produces clickable error messages that direct
  ; to a page describing the error or function causing the error in detail.
+@@ -640,7 +640,7 @@
+ ; empty.
+ ; http://php.net/error-log
+ ; Example:
+-;error_log = php_errors.log
++error_log = /var/www/log/php_errors.log
+ ; Log errors to syslog (Event Log on NT, not valid in Windows 95).
+ ;error_log = syslog
+ 
 @@ -793,7 +793,7 @@
  ;;;;;;;;;;;;;;;;;;;;;;;;;
  

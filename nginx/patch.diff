@@ -1,6 +1,6 @@
 diff -Paur ../orig-conf/apache_if_needed ./apache_if_needed
 --- ../orig-conf/apache_if_needed	1970-01-01 00:00:00.000000000 +0000
-+++ ./apache_if_needed	2012-03-14 08:28:25.274157400 +0000
++++ ./apache_if_needed	2012-03-14 08:19:34.000000000 +0000
 @@ -0,0 +1,19 @@
 +# include the proxy-settings needed for apache (not allowed in condition)
 +include proxy_params;
@@ -23,12 +23,12 @@ diff -Paur ../orig-conf/apache_if_needed ./apache_if_needed
 +}
 diff -Paur ../orig-conf/conf.d/index.conf ./conf.d/index.conf
 --- ../orig-conf/conf.d/index.conf	1970-01-01 00:00:00.000000000 +0000
-+++ ./conf.d/index.conf	2012-03-06 07:35:23.520873600 +0000
++++ ./conf.d/index.conf	2012-03-14 19:05:25.750413200 +0000
 @@ -0,0 +1 @@
 +index index.php index.html index.htm;
 diff -Paur ../orig-conf/fastcgi_params ./fastcgi_params
 --- ../orig-conf/fastcgi_params	2011-12-16 19:12:23.000000000 +0000
-+++ ./fastcgi_params	2011-12-18 13:37:51.892928000 +0000
++++ ./fastcgi_params	2012-03-14 07:27:04.000000000 +0000
 @@ -3,13 +3,22 @@
  fastcgi_param	CONTENT_TYPE		$content_type;
  fastcgi_param	CONTENT_LENGTH		$content_length;
@@ -55,7 +55,7 @@ diff -Paur ../orig-conf/fastcgi_params ./fastcgi_params
  
 diff -Paur ../orig-conf/sites-available/default ./sites-available/default
 --- ../orig-conf/sites-available/default	2012-02-07 16:15:50.000000000 +0000
-+++ ./sites-available/default	2012-03-06 07:35:07.064583000 +0000
++++ ./sites-available/default	2012-03-14 19:03:27.520650800 +0000
 @@ -1,109 +1,13 @@
 -# You may add here your
 -# server {
@@ -181,7 +181,7 @@ diff -Paur ../orig-conf/sites-available/default ./sites-available/default
 +}
 diff -Paur ../orig-conf/sites-available/sf ./sites-available/sf
 --- ../orig-conf/sites-available/sf	1970-01-01 00:00:00.000000000 +0000
-+++ ./sites-available/sf	2011-12-18 13:46:40.792089700 +0000
++++ ./sites-available/sf	2012-03-14 19:25:26.675878800 +0000
 @@ -0,0 +1,21 @@
 +server {
 +	listen 80;
@@ -199,14 +199,14 @@ diff -Paur ../orig-conf/sites-available/sf ./sites-available/sf
 +		alias /usr/share/php/data/symfony/web/sf/;
 +	}
 +
-+	location ~ (index|frontend|frontend_dev|backend|backend_dev)\.php$ {
++	location ~ (index|frontend|frontend_dev|backend|backend_dev)\.php($|/) {
 +		include fastcgi_params;
 +		fastcgi_pass 127.0.0.1:9000;
 +	}
 +}
 diff -Paur ../orig-conf/sites-available/sf2 ./sites-available/sf2
 --- ../orig-conf/sites-available/sf2	1970-01-01 00:00:00.000000000 +0000
-+++ ./sites-available/sf2	2011-12-18 13:52:20.558234500 +0000
++++ ./sites-available/sf2	2012-03-14 19:04:30.968279800 +0000
 @@ -0,0 +1,28 @@
 +server {
 +	listen 80;
@@ -238,7 +238,7 @@ diff -Paur ../orig-conf/sites-available/sf2 ./sites-available/sf2
 +}
 diff -Paur ../orig-conf/sites-available/ssc ./sites-available/ssc
 --- ../orig-conf/sites-available/ssc	1970-01-01 00:00:00.000000000 +0000
-+++ ./sites-available/ssc	2012-03-14 08:30:21.457389400 +0000
++++ ./sites-available/ssc	2012-03-14 08:30:14.000000000 +0000
 @@ -0,0 +1,29 @@
 +server {
 +	listen 80;
