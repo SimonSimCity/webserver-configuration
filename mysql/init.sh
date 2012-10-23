@@ -2,7 +2,6 @@
 SCRIPT_PATH="$( cd "$(dirname "$0")" && pwd )";
 
 aptitude -y install mysql-server > /dev/null
-patch -u -p0 -d /etc/mysql < $SCRIPT_PATH/patch.diff
 
 echo
 read -p "Do you want to import all sql-files matching /var/www/install-*.sql (y/n)?"
