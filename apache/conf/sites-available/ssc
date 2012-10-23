@@ -2,16 +2,20 @@
 	ServerAdmin webmaster@localhost
 	ServerAlias *.ssc
 
-	# TODO: Try to replace the /mnt/www/ stuff by /var/www. Currently symlinks are not allowed at this level.
 	UseCanonicalName Off
-	VirtualDocumentRoot /mnt/www/%0
+	DocumentRoot /var/www
+	VirtualDocumentRoot /var/www/%0
 
 	FastCgiExternalServer /mnt/www/php.ssc.default.fcgi -host 127.0.0.1:9000
 	AddHandler php5-fcgi .php
 	Action php5-fcgi /usr/lib/cgi-bin/php.ssc.default.fcgi
 	Alias /usr/lib/cgi-bin/ /mnt/www/
+	# Be warned that the DOCUMENT_ROOT in PHP will be wrong by using VirtualDocumentRoot.
+	# http://blog.suffolk-web-design.co.uk/2008/09/apache-automatic-sites-using.html
+	# https://issues.apache.org/bugzilla/show_bug.cgi?id=26052
+	# Seemed to be fixed in 2.4.1, workaround available in 2.3.14
 
-	<Directory /mnt/www/>
+	<Directory /var/www/>
 		Options Indexes FollowSymLinks MultiViews
 		AllowOverride None
 		Order allow,deny
