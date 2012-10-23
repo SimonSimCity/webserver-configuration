@@ -26,8 +26,8 @@ else
 	ln -s $mnt $wwwroot
 fi
 
-echo Install smbfs
-aptitude -y install smbfs > /dev/null
+echo Install CIFS Utils
+pacman -S --noconfirm cifs-utils > /dev/null
 
 # create directory, where the resource should be mounted, if not exists
 [ -a $mnt ] || mkdir $mnt
@@ -35,13 +35,13 @@ aptitude -y install smbfs > /dev/null
 # Add the setting to load the external resource
 echo "" >> /etc/fstab
 echo "# nobrl parameter is important - see http://www.kitpages.fr/sf2_samba_sqlite3.php" >> /etc/fstab
-echo "$fs $mnt smbfs username=$username,password=$password,uid=www-data,gid=www-data,nobrl 0 0" >> /etc/fstab
+echo "$fs $mnt cifs username=$username,password=$password,uid=http,gid=http,nobrl,dir_mode=0775,file_mode=0775 0 0" >> /etc/fstab
 
 echo
 echo "This script has appended three lines to the file /etc/fstab"
 read -p "Do you want to edit the file now? (y/n)"
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-	editor /etc/fstab
+	nano /etc/fstab
 fi
 
 read -p "Do you want to mount the samba resource now by reloading /etc/fstab? (y/n)"

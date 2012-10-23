@@ -1,8 +1,5 @@
 #!/bin/bash
-export DEBIAN_FRONTEND=noninteractive
 
-echo Register DotDeb as package resource
-./apt/register-dotdeb.sh
 
 read -p "Do you have a samba shared folder you want to mount (y/n)? [ \"n\" ]"
 if [[ $REPLY =~ ^[Yy]$ ]]; then
@@ -12,7 +9,7 @@ fi
 
 # Programms I personally like ...
 echo Install htop
-aptitude -y install htop > /dev/null
+pacman -S --noconfirm htop > /dev/null
 
 echo Install and configure Bind9
 ./bind9/init.sh
@@ -24,7 +21,7 @@ echo Install and configure PHP
 ./php/init.sh
 
 echo Install GraphicsMagick
-aptitude -y install graphicsmagick
+pacman -S --noconfirm graphicsmagick
 
 # create directory for logs
 [ -a /var/www/log ] || mkdir /var/www/log
