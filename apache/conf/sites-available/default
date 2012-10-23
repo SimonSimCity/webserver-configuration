@@ -4,10 +4,10 @@
 
 	DocumentRoot /var/www
 
-	FastCgiExternalServer /mnt/www/php.default.fcgi -host 127.0.0.1:9000
-	AddHandler php5-fcgi .php
-	Action php5-fcgi /usr/lib/cgi-bin/php.default.fcgi
-	Alias /usr/lib/cgi-bin/ /mnt/www/
+	Alias /usr/lib/cgi-bin/ /tmp/
+	FastCgiExternalServer /tmp/php.default.fcgi -host 127.0.0.1:9000
+	AddType application/x-httpd-fastphp5 .php
+	Action application/x-httpd-fastphp5 /usr/lib/cgi-bin/php.default.fcgi
 
 	<Directory /var/www/>
 		Options Indexes FollowSymLinks MultiViews
