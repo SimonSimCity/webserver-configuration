@@ -76,7 +76,7 @@ diff -Paur ../orig-conf/sites-available/default ./sites-available/default
 -# Please see /usr/share/doc/nginx-doc/examples/ for more detailed examples.
 -##
 -
--server {
+ server {
 -	#listen   80; ## listen for ipv4; this line is default and implied
 -	#listen   [::]:80 default_server ipv6only=on; ## listen for ipv6
 -
@@ -85,12 +85,21 @@ diff -Paur ../orig-conf/sites-available/default ./sites-available/default
 -
 -	# Make site accessible from http://localhost/
 -	server_name localhost;
--
++	listen 80;
++	server_name default.ssc;
+ 
 -	location / {
 -		# First attempt to serve request as file, then
 -		# as directory, then fall back to index.html
 -		try_files $uri $uri/ /index.html;
--	}
++	root /var/www;
++	access_log /var/www/log/nginx.default.access.log;
++	error_log /var/www/log/nginx.default.error.log;
++
++	location ~ \.php($|/) {
++		include fastcgi_params;
++		fastcgi_pass 127.0.0.1:9000;
+ 	}
 -
 -	location /doc/ {
 -		alias /usr/share/doc;
@@ -125,7 +134,7 @@ diff -Paur ../orig-conf/sites-available/default ./sites-available/default
 -	#location ~ /\.ht {
 -	#	deny all;
 -	#}
--}
+ }
 -
 -
 -# another virtual host using mix of IP-, name-, and port-based configuration
@@ -166,19 +175,6 @@ diff -Paur ../orig-conf/sites-available/default ./sites-available/default
 -#		try_files $uri $uri/ /index.html;
 -#	}
 -#}
-+server {
-+	listen 80;
-+	server_name default.ssc;
-+
-+	root /var/www;
-+	access_log /var/www/log/nginx.default.access.log;
-+	error_log /var/www/log/nginx.default.error.log;
-+
-+	location ~ \.php($|/) {
-+		include fastcgi_params;
-+		fastcgi_pass 127.0.0.1:9000;
-+	}
-+}
 diff -Paur ../orig-conf/sites-available/sf ./sites-available/sf
 --- ../orig-conf/sites-available/sf	1970-01-01 00:00:00.000000000 +0000
 +++ ./sites-available/sf	2012-03-14 19:25:26.675878800 +0000
